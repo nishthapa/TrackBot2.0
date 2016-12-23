@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="@string/left_icon" >
+
+    <ImageView
+        android:id="@+id/forward_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/forward_icon"
+        android:src="@drawable/forward"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/reverse_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/forward_butt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/reverse_icon"
+        android:src="@drawable/reverse"
+        android:visibility="gone" />
+    
+    <ListView
+        android:id="@+id/devices_ms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone" >
+    </ListView>
+
+    <ImageView
+        android:id="@+id/left_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/reverse_butt"
+        android:contentDescription="@string/left_icon"
+        android:src="@drawable/left"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/right_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/forward_butt"
+        android:contentDescription="@string/right_icon"
+        android:src="@drawable/right"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/left_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/left_butt"
+        android:text="@string/blank"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/right_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/left_value"
+        android:layout_alignBottom="@+id/left_value"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/right_butt"
+        android:text="@string/blank"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/forward_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@+id/right_butt"
+        android:text="@string/blank"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/reverse_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="@string/blank"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/sel_device_ms"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bluetooth_icon"
+        android:text="@string/blank" />
+
+    <!--<TextView
+        android:id="@+id/conn_ms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sel_device_ms"
+        android:layout_alignTop="@+id/forward_value"
+        android:text="@string/connecting"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="gone" /> -->
+
+    <Button
+        android:id="@+id/disconnect_ms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/disconnect"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/sent_ms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sel_device_ms"
+        android:layout_alignParentRight="true"
+        android:text="@string/blank"
+        android:visibility="visible" />
+
+    <!--<ProgressBar
+        android:id="@+id/connecting_ms"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/sel_device_ms"
+        android:visibility="gone" /> -->
+    
+</RelativeLayout>
