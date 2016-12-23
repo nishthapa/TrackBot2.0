@@ -26,6 +26,7 @@
         <activity
             android:name="com.nishant.trackbot2.Communication"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>

@@ -2,6 +2,7 @@ package com.nishant.trackbot2;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -12,7 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,8 +23,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.OutputStream;
+
+//import static com.nishant.trackbot2.R.id.toolbar;
 
 public class Communication extends AppCompatActivity
 {
@@ -32,24 +36,26 @@ public class Communication extends AppCompatActivity
 		angvalue,magvalue,total,temp;
 	int throttle,len,comm,contr,db_comm_int,db_contr_int,temp_comm,temp_contr;
 	public OutputStream out;
-	public DrawerLayout drawerLayout;
+	private DrawerLayout drawerLayout;
 	public BluetoothAdapter adapt;
 	public ContentValues cv;
 	//public ActionBar actionbar;
 	SQLiteDatabase usrdb=null;
 	public ListView drawerListView;
-	public ActionBarDrawerToggle actionBarDrawerToggle;
+	public Toolbar toolbar;
+	//public ActionBarDrawerToggle actionBarDrawerToggle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.communication);
-		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-		//setSupportActionBar(toolbar);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
+		toolbar = (Toolbar)findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		initNavigationDrawer();
+		//getSupportActionBar().setHomeButtonEnabled(true);
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		//getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
 		usrdb=this.openOrCreateDatabase("UsersDB.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 		cv = new ContentValues();
 		//actionbar = getSupportActionBar();
@@ -77,7 +83,7 @@ public class Communication extends AppCompatActivity
 			// Setting the Controller mode according to values in the database when first logging in
 			if(temp_contr == 1)
 			{
-				getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Motion Sensor)");
+				//getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Motion Sensor)");
 				FragmentManager fm=getFragmentManager();
 				boolean addToBackStack=true;
 				Fragment fragment=null;
@@ -86,7 +92,7 @@ public class Communication extends AppCompatActivity
 				{
 					FragmentTransaction ft=fm.beginTransaction();
 					ft.replace(R.id.container,fragment);
-					if(addToBackStack==true)
+					if(addToBackStack)
 					{
 						ft.addToBackStack(null);
 					}
@@ -98,7 +104,7 @@ public class Communication extends AppCompatActivity
 			//if(cont_mode_str.equals("Digital Buttons"))
 			if(temp_contr == 0)
 			{
-				getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Digital Buttons)");
+				//getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Digital Buttons)");
 				FragmentManager fm=getFragmentManager();
 				boolean addToBackStack=true;
 				Fragment fragment=null;
@@ -122,17 +128,82 @@ public class Communication extends AppCompatActivity
 		}
 		//getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Digital Buttons)");
 		adapt=BluetoothAdapter.getDefaultAdapter();
-		drawerListViewItems=getResources().getStringArray(R.array.drawer_items);
-		drawerListView=(ListView)findViewById(R.id.left_drawer);
-		drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_listview_item,drawerListViewItems));
-		drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-		actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.drawable.ic_drawer,
-		R.string.drawer_open,R.string.drawer_close);
-		drawerLayout.setDrawerListener(actionBarDrawerToggle);
-		drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+		//drawerListViewItems=getResources().getStringArray(R.array.drawer_items);
+		//drawerListView=(ListView)findViewById(R.id.left_drawer);
+		//drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_listview_item,drawerListViewItems));
+		//drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+		//actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
+		//drawerLayout.setDrawerListener(actionBarDrawerToggle);
+		//drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		//drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+	}
+	public void initNavigationDrawer()
+	{
+
+		NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+		navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
+		{
+			@Override
+			public boolean onNavigationItemSelected(MenuItem menuItem)
+			{
+
+				int id = menuItem.getItemId();
+
+				/*switch (id)
+				{
+					case R.id.comm_mode:
+						Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+						drawerLayout.closeDrawers();
+						break;
+					case R.id.contr_mode:
+						Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
+						break;
+					case R.id.logout:
+						finish();
+
+				}*/
+				switch(id)
+				{
+					case R.id.comm_mode:
+						CharSequence comm_mode_items[] = new CharSequence[]{"Bluetooth", "WiFi"};
+						CommMode(comm_mode_items);
+						break;
+
+					case R.id.contr_mode:
+						CharSequence contr_mode[] = new CharSequence[]{"Digital Buttons", "Motion Sensor"};
+						ContrMode(contr_mode, "Select Controller Mode :");
+						break;
+
+					case R.id.logout:
+						LogOut();
+				}
+				return true;
+			}
+		});
+		View header = navigationView.getHeaderView(0);
+		TextView tv_user = (TextView) header.findViewById(R.id.tv_user);
+		tv_user.setText(user);
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open, R.string.drawer_close)
+		{
+
+			@Override
+			public void onDrawerClosed(View v)
+			{
+				super.onDrawerClosed(v);
+			}
+
+			@Override
+			public void onDrawerOpened(View v)
+			{
+				super.onDrawerOpened(v);
+			}
+		};
+		drawerLayout.addDrawerListener(actionBarDrawerToggle);
+		actionBarDrawerToggle.syncState();
 	}
 	
+	/*
 	@Override
 	public void onPostCreate(Bundle savedInstanceState)
 	{
@@ -176,7 +247,7 @@ public class Communication extends AppCompatActivity
 			//Toast.makeText(Communication.this,((TextView)view).getText(),Toast.LENGTH_LONG).show();
 			drawerLayout.closeDrawer(drawerListView);
 		}
-	}
+	}*/
 	public void Toaster(String msg)
 	{
 		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
@@ -226,7 +297,7 @@ public class Communication extends AppCompatActivity
 					//if(cont_mode_str.equals("Motion Sensor"))
 					if(temp_contr == 1)
 					{
-						getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Motion Sensor)");
+						//getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Motion Sensor)");
 						FragmentManager fm=getFragmentManager();
 						boolean addToBackStack=true;
 						Fragment fragment=null;
@@ -247,7 +318,7 @@ public class Communication extends AppCompatActivity
 					//if(cont_mode_str.equals("Digital Buttons"))
 					if(temp_contr == 0)
 					{
-						getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Digital Buttons)");
+						//getSupportActionBar().setTitle("TrackBot 2.0 - "+user+" Logged in.(Digital Buttons)");
 						FragmentManager fm=getFragmentManager();
 						boolean addToBackStack=true;
 						Fragment fragment=null;
